@@ -8,19 +8,16 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
 
-  const user = configService.get('RABBITMQ_USER');
-  const password = configService.get('RABBITMQ_PASSWORD');
-  const host = configService.get('RABBITMQ_HOST');
-  const queueName = configService.get('RABBITMQ_QUEUE_NAME');
+  const port = configService.get<number>('PORT');
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
-      urls: [`amqp://${user}:${password}@${host}`],
-      queue: queueName,
+      urls: [configService.get<string>('RABBITMQ_URL')],
+      queue: configService.get<string>('RABBITMQ_QUEUE_NAME'),
     },
   });
   await app.startAllMicroservices();
-  await app.listen(3000);
+  await app.listen(port);
 }
 bootstrap();

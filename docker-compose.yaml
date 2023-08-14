@@ -11,6 +11,7 @@ services:
     restart: unless-stopped
   postgres:
     image: postgres:latest
+    container_name: postgres
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -18,3 +19,11 @@ services:
       - POSTGRES_PORT=${POSTGRES_PORT}
     ports:
       - ${POSTGRES_PORT}:${POSTGRES_PORT}
+  app:
+    env_file: docker.env
+    profiles:
+      - 'app'
+    build:
+      context: .
+    ports:
+      - ${PORT}:${PORT}

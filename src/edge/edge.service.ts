@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateEdgeInput } from './dto/create-edge.input';
 import { UpdateEdgeInput } from './dto/update-edge.input';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { Edge } from '@prisma/client';
 import { ClientProxy } from '@nestjs/microservices';
 
