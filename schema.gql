@@ -27,7 +27,6 @@ type Query {
 type Mutation {
   createEdge(createEdgeInput: CreateEdgeInput!): Edge!
   updateEdge(updateEdgeInput: UpdateEdgeInput!): Edge!
-  removeEdge(id: String!): Boolean!
 }
 
 input CreateEdgeInput {
