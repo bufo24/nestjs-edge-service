@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, Directive } from '@nestjs/graphql';
+import { ObjectType, Field, Directive } from '@nestjs/graphql';
 
 @ObjectType()
 export class Edge {
@@ -11,8 +11,8 @@ export class Edge {
   @Field(() => Date)
   updated_at: Date;
 
-  @Field(() => Int)
-  capacity: number;
+  @Field(() => String)
+  capacity: string;
 
   @Field(() => String)
   node1_alias: string;

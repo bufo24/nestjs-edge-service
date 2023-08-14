@@ -8,7 +8,7 @@ type Edge {
   id: String!
   created_at: DateTime!
   updated_at: DateTime!
-  capacity: Int!
+  capacity: String!
   node1_alias: String!
   node2_alias: String!
   edge_peers: String!

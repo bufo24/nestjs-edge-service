@@ -1,20 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateEdgeInput } from './dto/create-edge.input';
 import { UpdateEdgeInput } from './dto/update-edge.input';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Edge } from '@prisma/client';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class EdgeService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    @Inject('EDGE_SERVICE') private rabbitClient: ClientProxy,
+  ) {}
 
   async create(createEdgeInput: CreateEdgeInput): Promise<Edge> {
-    return await this.prismaService.edge.create({
+    const edge = await this.prismaService.edge.create({
       data: {
         capacity: this.getRandomCapacity(),
         ...createEdgeInput,
       },
     });
+    this.rabbitClient.emit('edge.created', edge);
+    return edge;
   }
 
   async getAll(): Promise<Array<Edge>> {

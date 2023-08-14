@@ -7,6 +7,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { PrismaModule } from './prisma/prisma.module';
 import { edgePeersDirectiveTransformer } from './edge/directives/edgePeers';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { DirectiveLocation, GraphQLDirective } from 'graphql';
       },
     }),
     PrismaModule,
+    ConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
