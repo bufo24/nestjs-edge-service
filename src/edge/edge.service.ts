@@ -14,10 +14,7 @@ export class EdgeService {
 
   async create(createEdgeInput: CreateEdgeInput): Promise<Edge> {
     const edge = await this.prismaService.edge.create({
-      data: {
-        capacity: this.getRandomCapacity(),
-        ...createEdgeInput,
-      },
+      data: createEdgeInput,
     });
     this.rabbitClient.emit('edge.created', edge);
     return edge;
@@ -45,9 +42,5 @@ export class EdgeService {
     } catch (e) {
       return false;
     }
-  }
-
-  private getRandomCapacity(): number {
-    return 10000;
   }
 }

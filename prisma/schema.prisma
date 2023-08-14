@@ -14,7 +14,7 @@ model Edge {
   id          String   @id @default(uuid())
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  capacity    Int
+  capacity    Int      @default(dbgenerated("floor(random() * 9990000 + 10000)"))
   node1_alias String
   node2_alias String
 }
