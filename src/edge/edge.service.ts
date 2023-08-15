@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateEdgeInput } from './dto/create-edge.input';
 import { UpdateEdgeInput } from './dto/update-edge.input';
 import { PrismaService } from '../prisma/prisma.service';
-import { Edge } from '@prisma/client';
+import { Edge, Prisma } from '@prisma/client';
 import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
@@ -29,18 +29,31 @@ export class EdgeService {
   }
 
   async update(updateEdgeInput: UpdateEdgeInput): Promise<Edge> {
-    return await this.prismaService.edge.update({
-      where: { id: updateEdgeInput.id },
-      data: updateEdgeInput,
-    });
+    try {
+      return await this.prismaService.edge.update({
+        where: { id: updateEdgeInput.id },
+        data: updateEdgeInput,
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025') {
+          throw new Error(`No Edge found with id ${updateEdgeInput.id}`);
+        }
+      }
+      throw e;
+    }
   }
 
-  async remove(id: string): Promise<boolean> {
+  async remove(id: string): Promise<void> {
     try {
       await this.prismaService.edge.delete({ where: { id } });
-      return true;
     } catch (e) {
-      return false;
+      if (e instanceof Prisma.PrismaClientKnownRequestError) {
+        if (e.code === 'P2025') {
+          throw new Error(`No Edge found with id ${id}`);
+        }
+      }
+      throw e;
     }
   }
 }
