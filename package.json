@@ -20,7 +20,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:migrate:dev": "prisma migrate dev",
     "docker:run:no-app": "docker compose --env-file docker.env up -d",
-    "docker:run": "docker compose --env-file docker.env --profile app up -d"
+    "docker:run": "docker compose --env-file docker.env --profile app up -d",
+    "docker:down": "docker compose --profile app down"
   },
   "dependencies": {
     "@apollo/server": "^4.9.1",

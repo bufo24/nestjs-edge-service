@@ -38,4 +38,7 @@ yarn docker:run:no-app
 
 # run postgres and rabbitmq together with the app
 yarn docker:run
+
+# stop docker containers
+yarn docker:down
 ```
