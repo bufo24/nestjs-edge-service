@@ -9,21 +9,24 @@ export class EdgeResolver {
   constructor(private readonly edgeService: EdgeService) {}
 
   @Mutation(() => Edge)
-  createEdge(@Args('createEdgeInput') createEdgeInput: CreateEdgeInput) {
+  createEdge(
+    @Args('createEdgeInput', { name: 'createEdge' })
+    createEdgeInput: CreateEdgeInput,
+  ) {
     return this.edgeService.create(createEdgeInput);
   }
 
-  @Query(() => [Edge], { name: 'edges' })
+  @Query(() => [Edge], { name: 'getEdges' })
   getAll() {
     return this.edgeService.getAll();
   }
 
-  @Query(() => Edge, { name: 'edge' })
-  findOne(@Args('id', { type: () => String }) id: string) {
+  @Query(() => Edge, { name: 'getEdge' })
+  getById(@Args('id', { type: () => String }) id: string) {
     return this.edgeService.getById(id);
   }
 
-  @Mutation(() => Edge)
+  @Mutation(() => Edge, { name: 'updateEdge' })
   updateEdge(@Args('updateEdgeInput') updateEdgeInput: UpdateEdgeInput) {
     return this.edgeService.update(updateEdgeInput);
   }
