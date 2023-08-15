@@ -18,7 +18,6 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "docker:postgres": "dotenv -- cross-var docker run -d --name nestjs-edge-service -p %POSTGRES_PORT%:5432 -e POSTGRES_PASSWORD=%POSTGRES_PASSWORD% -e POSTGRES_USER=%POSTGRES_USER% -e POSTGRES_DB=%POSTGRES_DATABASE% postgres:latest",
     "db:migrate:dev": "prisma migrate dev",
     "docker:run:no-app": "docker compose --env-file docker.env up -d",
     "docker:run": "docker compose --env-file docker.env --profile app up -d"
